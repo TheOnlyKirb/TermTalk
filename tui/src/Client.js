@@ -243,7 +243,7 @@ class ClientTUI {
 				let start = data.history.length - screen.height
 				for(let i = start < 0 ? 0 : start; i < screen.height - 1; i++){
 					if(!data.history[i]) break
-					messages.log(`${data.history[i].time} [${data.history[i].channel}] ${data.history[i].username}#${data.history[i].tag} > ${data.history[i].msg}`, "{white-fg}", "{/white-fg}")
+					messages.log(`${this._getTime(data.history[i].timestamp)} [${data.history[i].channel}] ${data.history[i].username}#${data.history[i].tag} > ${data.history[i].msg}`, "{white-fg}", "{/white-fg}")
 				}
 			}else if(data.method == "userChangeChannel"){
 				if(!data.join) messages.log(`${this._getTime()} [${data.previousChannel}] ${data.username}#${data.tag} < Changed to ${data.newChannel} channel.`, this.textPrefix, this.textSuffix)
@@ -358,8 +358,8 @@ class ClientTUI {
 		return false
 	}
 
-	static _getTime() {
-		return `[${new Intl.DateTimeFormat({}, {timeStyle: "short", hour12: true}).format(new Date())}]`
+	static _getTime(timestamp) {
+		return `[${new Intl.DateTimeFormat({}, {timeStyle: "short", hour12: true}).format(timestamp ? new Date(timestamp) : new Date())}]`
 	}
 }
 

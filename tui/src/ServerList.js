@@ -144,6 +144,7 @@ class ServerList {
     screen.render()
 
     servers.on("select", (data, index) => {
+      if(index == -1) index = 0
       let ip = this.publicServers[index]
       let secure = this.names[index].endsWith("Secure")
       const reconnectionAttempts = 5
@@ -186,7 +187,7 @@ class ServerList {
 
   static _getList() {
     return new Promise((resolve, reject) => {
-      http.get("http://termtalkservers.is-just-a.dev:7680/list", res => {
+      https.get("https://servers.termtalk.app/list", res => {
         const status = res.statusCode
         if (status === 200) {
           res.setEncoding("utf8")
